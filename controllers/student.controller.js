@@ -67,11 +67,12 @@ exports.findOne = (req, res) => {
 
 // Update a Student by the id in the request
 exports.update = (req, res) => {
-  const id = req.params.id;
-  console.log(`student id : ${id}`);
+  // const id = req.params.id;
+  const student_id = req.params.id;
+  console.log(`student id : ${student_id}`);
 
   Student.update(req.body, {
-    where: { id: id },
+    where: { student_id },
   })
     .then((num) => {
       if (num == 1) {
@@ -80,23 +81,26 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Student with id=${id}. Maybe Student was not found or req.body is empty!`,
+          message: `Cannot update Student with id=${student_id}. Maybe Student was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating Student with id=" + id,
+        message: `Error updating Student with id = ${student_id}`,
       });
+      console.log(err.message);
     });
 };
 
 // Delete a Student with the specified id in the request
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  // const id = req.params.id;
+  const student_id = req.params.id;
+  console.log(`student id : ${student_id}`);
 
   Student.destroy({
-    where: { id: id },
+    where: { student_id },
   })
     .then((num) => {
       if (num == 1) {
@@ -105,13 +109,13 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete Student with id=${id}. Maybe Student was not found!`,
+          message: `Cannot delete Student with id = ${student_id}. Maybe Student was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Student with id=" + id,
+        message: `Could not delete Student with id = ${student_id}`, //  err.message, //
       });
     });
 };
@@ -129,20 +133,6 @@ exports.deleteAll = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while removing all Students.",
-      });
-    });
-};
-
-// find all published Student
-exports.findAllPublished = (req, res) => {
-  Student.findAll({ where: { published: true } })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Students.",
       });
     });
 };
