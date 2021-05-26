@@ -38,13 +38,6 @@ exports.create = (req, res) => {
 
 // Retrieve all Students from the database.
 exports.findAll = (req, res) => {
-  //   const title = req.query.title;
-  //   const { student_number, Class, major, student_name } = req.body;
-  //   var condition = student_name
-  //     ? { student_name: { [Op.iLike]: `%${student_name}%` } }
-  //     : null;
-
-  //   Student.findAll({ where: condition })
   Student.findAll()
     .then((data) => {
       res.send(data);
@@ -60,7 +53,7 @@ exports.findAll = (req, res) => {
 // Find a single Student with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  console.log(`student id : ${id}`);
+  // console.log(`student id : ${id}`);
   Student.findByPk(id)
     .then((data) => {
       res.send(data);
@@ -75,6 +68,7 @@ exports.findOne = (req, res) => {
 // Update a Student by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
+  console.log(`student id : ${id}`);
 
   Student.update(req.body, {
     where: { id: id },

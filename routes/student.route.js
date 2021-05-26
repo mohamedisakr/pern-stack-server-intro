@@ -19,5 +19,7 @@ module.exports = (app) => {
 
   // Delete all students
   router.delete("/", students.deleteAll);
+
+  // student base route
   app.use(process.env.STUDENT_ROUTE, router);
 };

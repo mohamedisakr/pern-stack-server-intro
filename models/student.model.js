@@ -2,8 +2,11 @@ module.exports = (sequelize, Sequelize) => {
   const Student = sequelize.define(
     "student",
     {
-      student_id: { type: Sequelize.UUID, primaryKey: true },
-      // id: { type: Sequelize.UUID },
+      student_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+      },
       student_number: { type: Sequelize.INTEGER },
       class: { type: Sequelize.INTEGER },
       major: { type: Sequelize.STRING(10) },
