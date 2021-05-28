@@ -7,7 +7,8 @@ require("dotenv").config();
 // define cors oprions (origin)
 const corsOptions = { origin: process.env.SERVER_URL };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 
 // If you are using Express 4.16+ you don't have to import body-parser anymore.
 // You can do it just like this:
@@ -23,7 +24,13 @@ const db = require("./models");
 db.sequelize.sync();
 
 // go for simple route
-app.get("/", (req, res) => res.json({ message: "this is simple app" }));
+// app.get("/", (req, res) => res.json({ message: "this is simple app" }));
+
+// Access to fetch at from origin 'http://localhost:3000' has been blocked by CORS policy
+app.use((req, res, next) => {
+  res.header({ "Access-Control-Allow-Origin": "*" });
+  next();
+});
 
 require("./routes/student.route")(app);
 
